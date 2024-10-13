@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const NoteSchema = mongoose.Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    type: mongoose.Schema.Types.ObjectId, // user field will store an ObjectId.
+    ref: "user", // tells Mongoose that this ObjectId refers to a document in the users collection
   },
   title: {
     type: String,
