@@ -15,5 +15,5 @@ app.use("/api/note", noteRoute);
 connectDB();
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`iNotebook backend listening on port ${PORT}`);
 });
