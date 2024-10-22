@@ -16,7 +16,8 @@ const NoteItem = (props) => {
           <i
             className="fa-solid fa-trash mx-3"
             onClick={() => {
-              return deleteNote(note._id);
+              deleteNote(note._id);
+              props.showAlert("Deleted successfully", "success");
             }}
           ></i>
           <i
@@ -38,5 +39,6 @@ NoteItem.propTypes = {
     _id: PropTypes.string,
   }).isRequired,
   updateNote: PropTypes.func,
+  showAlert: PropTypes.func,
 };
 export default NoteItem;

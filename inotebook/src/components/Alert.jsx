@@ -1,12 +1,27 @@
+//import React from 'react'
+import PropTypes from "prop-types";
 
-const Alert = () => {
+function Alert(props) {
+  const capitalize = (word) => {
+    const lower = word.toLowerCase();
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
+  };
   return (
-    <div>
-      <div className="alert alert-primary" role="alert">
-        A simple primary alert—check it out!
-      </div>
+    <div style={{ height: "50px" , position: "fixed", width: "80%"}}>
+      {props.alert && (
+        <div
+          className={`alert alert-${props.alert.type} alert-dismissible fade show`}
+          role="alert"
+        >
+          <strong>{capitalize(props.alert.type)}</strong>: {props.alert.msg}
+        </div>
+      )}
     </div>
   );
 }
 
-export default Alert
+Alert.propTypes = {
+  alert: PropTypes.object,
+};
+
+export default Alert;

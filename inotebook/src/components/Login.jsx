@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const Login = () => {
+const Login = (props) => {
     let navigate = useNavigate();
-
-
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -28,13 +27,15 @@ const Login = () => {
         //save auth token and redirect
         localStorage.setItem("token", json.authtoken);
         navigate("/");
+        props.showAlert("Logged in successfully", "success");
     }
     else{
-        alert("invalid credentials");
+        props.showAlert("Invalid credentials", "warning");
     }
   };
   return (
-    <div>
+    <div className="login">
+        <h2>Login to continue to iNotebook</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
@@ -70,5 +71,8 @@ const Login = () => {
     </div>
   );
 };
+Login.propTypes={
+    showAlert: PropTypes.func
+}
 
 export default Login;

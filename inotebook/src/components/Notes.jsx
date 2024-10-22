@@ -3,12 +3,20 @@ import NoteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
 import { useEffect } from "react";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-const Notes = () => {
+const Notes = (props) => {
   const context = useContext(NoteContext);
   const { myNotes, getNotes, editNote } = context;
+  const navigate = useNavigate();
   useEffect(() => {
-    getNotes();
+    if (localStorage.getItem("token")) {
+      getNotes();
+    } else {
+      navigate("/login");
+    }
+    //eslint-disable-next-line
   }, []);
 
   const [note, setNote] = useState({
@@ -20,21 +28,27 @@ const Notes = () => {
 
   const updateNote = (currentNote) => {
     ref.current.click();
-    setNote({id: currentNote._id, etitle: currentNote.title, edescription:currentNote.description, etag: currentNote.tag});
+    setNote({
+      id: currentNote._id,
+      etitle: currentNote.title,
+      edescription: currentNote.description,
+      etag: currentNote.tag,
+    });
   };
   const ref = useRef(null);
   const refClose = useRef(null);
   const handleOnClick = () => {
     console.log("updating the node", note);
-    editNote(note.id, note.etitle, note.edescription, note.etag)
+    editNote(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
+    props.showAlert("Updated successfully", "success");
   };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
   return (
     <>
-      <AddNote />
+      <AddNote showAlert={props.showAlert} />
 
       <button
         type="button"
@@ -77,7 +91,7 @@ const Notes = () => {
                     className="form-control"
                     id="etitle"
                     name="etitle"
-                    value = {note.etitle}
+                    value={note.etitle}
                     onChange={onChange}
                   />
                 </div>
@@ -88,7 +102,7 @@ const Notes = () => {
                   <input
                     type="text"
                     className="form-control"
-                    value = {note.edescription}
+                    value={note.edescription}
                     id="edescription"
                     name="edescription"
                     onChange={onChange}
@@ -100,7 +114,7 @@ const Notes = () => {
                   </label>
                   <input
                     type="text"
-                    value = {note.etag}
+                    value={note.etag}
                     className="form-control"
                     id="etag"
                     name="etag"
@@ -111,14 +125,18 @@ const Notes = () => {
             </div>
             <div className="modal-footer">
               <button
-              ref={refClose}
+                ref={refClose}
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary" onClick={handleOnClick}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleOnClick}
+              >
                 Update Note
               </button>
             </div>
@@ -129,12 +147,20 @@ const Notes = () => {
         <h2>Your Notes</h2>
         {myNotes.map((note) => {
           return (
-            <NoteItem key={note._id} updateNote={updateNote} note={note} />
+            <NoteItem
+              key={note._id}
+              updateNote={updateNote}
+              note={note}
+              showAlert={props.showAlert}
+            />
           );
         })}
       </div>
     </>
   );
+};
+Notes.propTypes = {
+  showAlert: PropTypes.func,
 };
 
 export default Notes;
