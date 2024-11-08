@@ -1,49 +1,107 @@
+body {
+  font-family: "Sour Gummy", sans-serif;
+  background: #232946;
+  color: #b8c1ec;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 i {
   cursor: pointer;
 }
 
 .navbar {
   position: sticky;
-  top: 0;          /* Sticks to the top of the viewport */
-  z-index: 1000;   /* Ensures it's above other content */
-  background-color: #333; /* Optional: Change background color */
-  padding: 10px;   /* Optional: Add padding */
+  top: 0; /*to stick to the top of the viewport */
+  z-index: 1000;
+  background-color: #eebbc3;
+  
 }
 
-.login{
-    margin-top: 50px ;
+.login {
+  margin-top: 50px;
 }
 
 .card {
-  height: 200px; /* Adjust height as needed */
-  display: flex; /* Use flexbox to manage layout */
-  flex-direction: column; /* Stack elements vertically */
-  justify-content: space-between; /* Space elements evenly */
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #b8c1ec;
 }
 
 .card-body {
-  display: flex; /* Use flexbox for card body */
-  flex-direction: column; /* Stack title and description */
-  flex-grow: 1; /* Allow it to fill remaining space */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .card-title {
-  font-size: 1.2em; /* Set title size */
-  margin: 0; /* Remove default margin */
+  font-size: 1.2em;
+  margin: 0;
 }
 
 .card-text {
-  flex-grow: 1; /* Allow description to grow and take up space */
-  margin: 0; /* Remove default margin */
-  display: -webkit-box; /* Use box layout for text */
-  -webkit-box-orient: vertical; /* Stack children vertically */
-  -webkit-line-clamp: 4; /* Limit to 4 lines */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  flex-grow: 1;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .icon-container {
-  display: flex; /* Use flex for icons */
-  justify-content: flex-end; /* Align icons to the right */
-  padding-top: 10px; /* Space between text and icons */
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+
+.btn-nav {
+  background-color: #232946;
+  color: #fffffe;
+  border: none;
+}
+.btn-nav:hover,
+.btn-nav:focus {
+  background-color: #3f476c;
+}
+
+.btn-body {
+  background-color: #eebbc3;
+  color: #232946;
+  border: none;
+}
+
+.btn-body:hover,
+.btn-nav:focus {
+  background-color: #bd949c;
+}
+
+#description {
+  height: 90px;
+}
+
+.btn {
+  margin-right: 4px;
+}
+
+input,
+textarea {
+  background-color: #b8c1ec !important;
+}
+
+.add-note {
+  width: 70%;
+  border: 2px solid;
+  padding: 15px;
+}
+
+.your-notes {
+  width: 70%;
+  border: 2px solid;
+  padding: 15px;
+  margin: 0px auto;
 }

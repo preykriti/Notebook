@@ -64,10 +64,10 @@ const Login = (props) => {
             id="password"
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-body">
           Submit
         </button>
-      </form>{" "}
+      </form>
     </div>
   );
 };

@@ -20,7 +20,7 @@ const AddNote = (props) => {
   };
   return (
     <div>
-      <div className="container my-3">
+      <div className="container my-3 add-note">
         <h2>Add a Note</h2>
         <form>
           <div className="mb-3">
@@ -39,7 +39,7 @@ const AddNote = (props) => {
             <label htmlFor="description" className="form-label">
               Description{" "}
             </label>
-            <input
+            <textarea
               type="text"
               className="form-control"
               id="description"
@@ -62,7 +62,7 @@ const AddNote = (props) => {
 
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-body"
             onClick={handleOnClick}
           >
             Add Note

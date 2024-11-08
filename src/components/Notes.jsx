@@ -91,7 +91,7 @@ const Notes = (props) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Modal title
+                Edit Your Note
               </h1>
               <button
                 type="button"
@@ -154,7 +154,7 @@ const Notes = (props) => {
               </button>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-body"
                 onClick={handleOnClick}
               >
                 Update Note
@@ -164,13 +164,13 @@ const Notes = (props) => {
         </div>
       </div>
 
-      <div className="row my-3">
-        <h2>All Notes</h2>
+      <div className="row my-3 your-notes">
+        <h2>Your Notes</h2>
         <h4>Tags</h4>
         <div className="tag-buttons">
           <button type="button"
             onClick={() => filterByTag("All")}
-            className="btn btn-secondary mx-1"
+            className="btn btn-body"
           >
             All
           </button>
@@ -178,7 +178,7 @@ const Notes = (props) => {
             <button
               key={tag}
               onClick={() => filterByTag(tag)}
-              className="btn btn-secondary mx-1"
+              className="btn btn-body"
             >
               {tag}
             </button>
