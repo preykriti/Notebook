@@ -1,8 +1,7 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import NoteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
-import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +9,9 @@ const Notes = (props) => {
   const context = useContext(NoteContext);
   const { myNotes, getNotes, editNote } = context;
   const navigate = useNavigate();
+
+  const [filteredNotes, setFilteredNotes] = useState(myNotes);
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       getNotes();
@@ -18,6 +20,10 @@ const Notes = (props) => {
     }
     //eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    setFilteredNotes(myNotes);
+  }, [myNotes]);
 
   const [note, setNote] = useState({
     id: "",
@@ -35,21 +41,35 @@ const Notes = (props) => {
       etag: currentNote.tag,
     });
   };
+
   const ref = useRef(null);
   const refClose = useRef(null);
   const handleOnClick = () => {
-    console.log("updating the node", note);
     editNote(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
     props.showAlert("Updated successfully", "success");
   };
+
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
+
+  const getUniqueTags = () => {
+    const tags = myNotes.map((note) => note.tag);
+    return [...new Set(tags)];
+  };
+
+  const filterByTag = (tag) => {
+    if (tag === "All") {
+      setFilteredNotes(myNotes);
+    } else {
+      setFilteredNotes(myNotes.filter((note) => note.tag === tag));
+    }
+  };
+
   return (
     <>
       <AddNote showAlert={props.showAlert} />
-
       <button
         type="button"
         ref={ref}
@@ -59,7 +79,7 @@ const Notes = (props) => {
       >
         Launch demo modal
       </button>
-      {/*  Modal */}
+      {/*  Modal for updating notes */}
       <div
         className="modal fade"
         id="exampleModal"
@@ -97,7 +117,7 @@ const Notes = (props) => {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="description" className="form-label">
-                    Description{" "}
+                    Description
                   </label>
                   <input
                     type="text"
@@ -109,7 +129,7 @@ const Notes = (props) => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="title" className="form-label">
+                  <label htmlFor="etag" className="form-label">
                     Tag
                   </label>
                   <input
@@ -143,22 +163,41 @@ const Notes = (props) => {
           </div>
         </div>
       </div>
+
       <div className="row my-3">
-        <h2>Your Notes</h2>
-        {myNotes.map((note) => {
-          return (
-            <NoteItem
-              key={note._id}
-              updateNote={updateNote}
-              note={note}
-              showAlert={props.showAlert}
-            />
-          );
-        })}
+        <h2>All Notes</h2>
+        <h4>Tags</h4>
+        <div className="tag-buttons">
+          <button type="button"
+            onClick={() => filterByTag("All")}
+            className="btn btn-secondary mx-1"
+          >
+            All
+          </button>
+          {getUniqueTags().map((tag) => (
+            <button
+              key={tag}
+              onClick={() => filterByTag(tag)}
+              className="btn btn-secondary mx-1"
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
+        {filteredNotes.map((note) => (
+          <NoteItem
+            key={note._id}
+            updateNote={updateNote}
+            note={note}
+            showAlert={props.showAlert}
+          />
+        ))}
       </div>
     </>
   );
 };
+
 Notes.propTypes = {
   showAlert: PropTypes.func,
 };
